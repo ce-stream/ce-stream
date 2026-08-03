@@ -1,0 +1,29 @@
+[package]
+name = "ce-stream-mysql"
+description = "MySQL 9.x ROW binlog change source for ce-stream"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+async-trait = { workspace = true }
+async-std = { version = "1.12", features = ["attributes"] }
+ce-stream-core = { workspace = true }
+mysql-binlog-connector-rust = { path = "../../vendor/mysql-binlog-connector-rust", default-features = false, features = ["rustls"] }
+percent-encoding = "2.3"
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
+tracing-subscriber = { workspace = true }
+tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }
+
+[[example]]
+name = "embed_callback"
+path = "examples/embed_callback.rs"

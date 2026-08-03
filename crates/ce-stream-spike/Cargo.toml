@@ -1,0 +1,21 @@
+[package]
+name = "ce-stream-spike"
+description = "Phase 1 MySQL 9.x binlog spike (not a product binary)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+publish = false
+
+[[bin]]
+name = "ce-stream-spike"
+path = "src/main.rs"
+
+[dependencies]
+# Vendored + SHOW BINARY LOG STATUS (MySQL 9.x); see vendor/.../PATCHES.md
+mysql-binlog-connector-rust = { path = "../../vendor/mysql-binlog-connector-rust", default-features = false, features = ["rustls"] }
+async-std = { version = "1.12", features = ["attributes"] }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+clap = { workspace = true }

@@ -1,0 +1,15 @@
+[Unit]
+Description=ce-stream MySQL CloudEvents capture
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/ce-stream
+ExecStart=/opt/ce-stream/ce-stream --config /opt/ce-stream/ce-stream.toml
+Restart=on-failure
+RestartSec=5
+Environment=RUST_LOG=info
+# Use a dedicated unique server_id in ce-stream.toml per host.
+
+[Install]
+WantedBy=multi-user.target

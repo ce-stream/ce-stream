@@ -1,0 +1,52 @@
+# Comparison worksheet (fill after baseline + choke, and optional Debezium run).
+# Copy to out/ and edit; do not treat empty Debezium/Fivetran cells as failures.
+
+{
+  "lab": {
+    "mysql_version": "9.x",
+    "host_role": "primary",
+    "machine_notes": "AxialDB MySQL 9.7 lab, local HTTP mock sink, sync checkpoint after each ACK",
+    "recorded": "2026-08-02"
+  },
+  "ce_stream_json": {
+    "format": "json",
+    "baseline_events_per_sec": 458.05,
+    "baseline_rows": 1000,
+    "baseline_bytes": 407833,
+    "choke_delay_ms": 10,
+    "choke_events_per_sec": 62.04,
+    "choke_received_equals_rows": true,
+    "sustained_300_keep_up": true,
+    "sustained_600_keep_up": true,
+    "sustained_1200_keep_up": false,
+    "delivery_ceiling_eps_approx": "600-650",
+    "notes": "HTTP per-event + sync checkpoint bound throughput."
+  },
+  "ce_stream_avro": {
+    "format": "avro",
+    "baseline_events_per_sec": 495.39,
+    "baseline_rows": 1000,
+    "baseline_bytes": 344893,
+    "choke_delay_ms": 10,
+    "choke_events_per_sec": 55.67,
+    "choke_received_equals_rows": true,
+    "sustained_1000_keep_up": false,
+    "sustained_1000_second_half_eps": 740.83,
+    "sustained_1000_catch_up_ms": 21853,
+    "delivery_ceiling_eps_approx": "~740",
+    "notes": "Smaller payloads (~15% vs JSON baseline); choke still delay-bound; sustained 1000/s fails keep-up but higher ceiling than JSON."
+  },
+  "debezium": {
+    "topology": "not run locally; see Debezium Server MySQL streaming blog (Kafka path)",
+    "same_loadgen_rows": null,
+    "events_per_sec_or_catchup_sec": null,
+    "slow_consumer_behavior": "",
+    "notes": "Leave null if not run; document fairness differences."
+  },
+  "fivetran": {
+    "comparable_run": false,
+    "qualitative_notes": "SaaS/warehouse; compare impact and lag SLAs from workplace, not local A/B.",
+    "workplace_observations": ""
+  },
+  "conclusion": "JSON keep-up through ~600/s (ceiling ~600-650). Avro baseline slightly faster/smaller; sustained ceiling ~740 eps; 1000/s still fails keep-up under HTTP-per-event."
+}

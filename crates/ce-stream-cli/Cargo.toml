@@ -1,0 +1,25 @@
+[package]
+name = "ce-stream-cli"
+description = "ce-stream command-line runner"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "ce-stream"
+path = "src/main.rs"
+
+[dependencies]
+ce-stream-core = { workspace = true }
+ce-stream-mysql = { workspace = true }
+chrono = { workspace = true }
+clap = { workspace = true }
+rustls = { version = "0.23", default-features = false, features = ["aws-lc-rs", "std"] }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+toml = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }

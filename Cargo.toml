@@ -1,0 +1,35 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/ce-stream-core",
+    "crates/ce-stream-mysql",
+    "crates/ce-stream-cli",
+    "crates/ce-stream-spike",
+    "crates/ce-stream-perf-sink",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/ce-stream/ce-stream"
+rust-version = "1.75"
+
+[workspace.dependencies]
+ce-stream-core = { path = "crates/ce-stream-core" }
+ce-stream-mysql = { path = "crates/ce-stream-mysql" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+axum = "0.8"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "signal", "fs", "io-util", "sync", "net"] }
+thiserror = "2"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+async-trait = "0.1"
+toml = "0.8"
+clap = { version = "4", features = ["derive", "env"] }
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+apache-avro = "0.19"
+base64 = "0.22"

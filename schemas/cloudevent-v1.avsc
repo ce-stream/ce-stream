@@ -1,0 +1,24 @@
+{
+  "type": "record",
+  "name": "CloudEvent",
+  "namespace": "io.ce_stream",
+  "doc": "ce-stream CloudEvents 1.0 envelope as Avro. Variable row data stays JSON in data_json. Schema id: ce-stream.cloudevent.v1",
+  "fields": [
+    { "name": "specversion", "type": "string" },
+    { "name": "id", "type": "string" },
+    { "name": "type", "type": "string" },
+    { "name": "source", "type": "string" },
+    { "name": "subject", "type": "string" },
+    { "name": "time", "type": "string" },
+    {
+      "name": "extensions_json",
+      "type": "string",
+      "doc": "JSON object of CloudEvents extension attributes (gtid, file, pos, ...)"
+    },
+    {
+      "name": "data_json",
+      "type": "string",
+      "doc": "JSON value of CloudEvent data (op / before / after or signal)"
+    }
+  ]
+}

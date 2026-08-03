@@ -1,0 +1,34 @@
+# Example config - MySQL 9.x only for v1
+# Copy to ce-stream.toml (gitignored) and set password.
+#
+# Production: run without --max-events (continuous). Prefer a replica host.
+# Columns: set binlog_row_metadata=FULL on MySQL for real names (not col_0).
+
+[source]
+adapter = "mysql"
+source_id = "mysql://127.0.0.1:3306/ce-stream"
+host = "127.0.0.1"
+port = 3306
+user = "ce_stream"
+password = "CeStreamSpike9!"
+server_id = 19001
+tls = true
+# full = before/after images; signal = op only
+payload_mode = "full"
+# Bounded queue; reader blocks when sink is slow (no drops)
+queue_capacity = 64
+
+# Include-list only (client-side filter on binlog stream)
+include_tables = ["ce_stream_spike.t1"]
+# include_tables = ["demo_perf.orders"]
+
+[checkpoint]
+path = ".ce-stream/checkpoint.json"
+
+[sink]
+# stdout | http
+kind = "stdout"
+# kind = "http"
+# url = "http://127.0.0.1:18080/events"
+# Wire format: json (default) | avro  — see docs/avro.md
+format = "json"
