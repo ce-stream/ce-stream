@@ -2,9 +2,12 @@
 
 | Doc | Audience | Notes |
 |-----|----------|--------|
-| [`../README.md`](../README.md) | Everyone | Start here |
+| [`../README.md`](../README.md) | Everyone | Start here ([AxialDB](https://axialdb.com/) maintained) |
+| [`../CONTRIBUTING.md`](../CONTRIBUTING.md) | Contributors | Bugs, PRs, Discussions |
+| [`../SECURITY.md`](../SECURITY.md) | Security reports | Private advisory path |
+| [`../CHANGELOG.md`](../CHANGELOG.md) | Everyone | Release notes |
 | [`planning.md`](planning.md) | Maintainers | Phase status; Phase 6 multi-DB **deferred** |
-| [`oss-readiness.md`](oss-readiness.md) | Maintainers | Plan to match Rust DB OSS peers for v0.1 |
+| [`oss-readiness.md`](oss-readiness.md) | Maintainers | Lean OSS MVP (mostly done; Discussions + tag manual) |
 | [`ops-e2e.md`](ops-e2e.md) | Operators | Continuous capture → HTTP |
 | [`delivery.md`](delivery.md) | Operators / consumers | At-least-once, backpressure, payload modes |
 | [`library.md`](library.md) | Embedders | In-process `ChangeSource` |

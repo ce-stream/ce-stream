@@ -35,7 +35,10 @@ pub fn encode_cloudevent(event: &CloudEvent) -> Result<Vec<u8>> {
     let data_json = serde_json::to_string(&event.data).map_err(|e| Error::Sink(e.to_string()))?;
 
     let value = Value::Record(vec![
-        ("specversion".into(), Value::String(event.specversion.clone())),
+        (
+            "specversion".into(),
+            Value::String(event.specversion.clone()),
+        ),
         ("id".into(), Value::String(event.id.clone())),
         ("type".into(), Value::String(event.ty.clone())),
         ("source".into(), Value::String(event.source.clone())),
@@ -109,7 +112,10 @@ mod tests {
         assert_eq!(back.id, ev.id);
         assert_eq!(back.ty, ev.ty);
         assert_eq!(back.subject, "db.t1");
-        assert_eq!(back.extensions.get("gtid").and_then(|v| v.as_str()), Some("uuid:1-2-3"));
+        assert_eq!(
+            back.extensions.get("gtid").and_then(|v| v.as_str()),
+            Some("uuid:1-2-3")
+        );
         assert_eq!(back.data["op"], "insert");
     }
 }

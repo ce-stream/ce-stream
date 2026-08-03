@@ -1,6 +1,6 @@
 # ce-stream — implementation plan
 
-**Status:** Phases 0–5 done (MySQL 9.x JSON + Avro, E2E, harden, perf). **Other DB engines deferred** (Phase 6 parked). Next focus: OSS polish / v0.1 tag readiness — see [`oss-readiness.md`](oss-readiness.md).
+**Status:** Phases 0–5 done (MySQL 9.x JSON + Avro, E2E, harden, perf). **Other DB engines deferred** (Phase 6 parked). Lean OSS MVP landed in-repo; next: enable Discussions, tag `v0.1.0` — see [`oss-readiness.md`](oss-readiness.md). Maintained by [AxialDB](https://axialdb.com/) ([releases](https://github.com/AxialDB/releases)).
 
 **Product:** Database change logs → **CloudEvents 1.0** (include-list, resume, Kafka optional). Not a warehouse ELT tool; not Debezium/Kafka Connect.
 
@@ -164,4 +164,4 @@ Phase 0 → 1 (spike) → 2 (MVP) → 3 (HTTP E2E) → 4 (harden)
   → Phase 6 (other DBs) only if un-deferred
 ```
 
-**Now:** Product path through Phase 5 complete; Phase 6 deferred. **Next:** OSS readiness ([`oss-readiness.md`](oss-readiness.md)), then v0.1 tag when ready.
+**Now:** Product path through Phase 5 complete; Phase 6 deferred; lean OSS MVP files in repo. **Next:** enable GitHub Discussions; tag `v0.1.0` when ready; crates.io later.

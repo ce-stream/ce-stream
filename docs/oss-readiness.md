@@ -1,6 +1,57 @@
 # OSS readiness plan (v0.1 bar)
 
-**Purpose:** Close the gap between ce-stream today and what credible Rust DB projects show at the GitHub root and in day-2 ops. **Plan only** — do not implement until prioritized.
+**Purpose:** Close the gap between ce-stream today and what credible Rust DB projects show at the GitHub root — **without** copying diesel/sea-orm ceremony on day one.
+
+**Maintainer:** [AxialDB](https://axialdb.com/) vendor ([releases](https://github.com/AxialDB/releases)). Project is open-source; AxialDB is the creating/maintaining org, not a hard runtime dependency.
+
+**MVP status (2026-08-02):** Implemented in-repo — `LICENSE`, README credit, `CONTRIBUTING.md`, `SECURITY.md`, issue/PR templates, CI workflow, `CHANGELOG.md`, install-from-git docs. **Manual:** enable GitHub Discussions on the repo; tag `v0.1.0` when you cut the release; crates.io publish later.
+
+---
+
+## Recommended model: lean OSS MVP
+
+Do **not** start with Discord, CoC bureaucracy, Dependabot sprawl, docs websites, or dual-license bikeshedding. Match **sqlx-ish minimum**, not diesel-max.
+
+### In scope for first public cut (MVP)
+
+| Item | Why enough | Status |
+|------|------------|--------|
+| `LICENSE` (Apache-2.0 file matching Cargo) | Legal clarity; peers always have this | done |
+| README (outsider + **AxialDB** links) | First impression | done |
+| Short `CONTRIBUTING.md` | Fork → PR; bugs = Issues; questions = Discussions | done |
+| Enable GitHub **Discussions** | No Discord yet | **manual** (repo settings) |
+| One bug **issue template** + short **PR template** | Useful reports without process theater | done |
+| CI: `fmt` + `clippy` + `test` (no live MySQL on every PR) | Trust signal | done (`.github/workflows/ci.yml`) |
+| `CHANGELOG.md` + tag `v0.1.0` | Release hygiene | changelog done; **tag when ready** |
+| Publish crates **or** document `cargo install --git` until publish | Delivery path | install-from-git documented |
+
+**Tracker:** GitHub only (Issues / PRs / Discussions). No Jira for public OSS.
+
+**Security (minimal):** one paragraph in README or tiny `SECURITY.md` — “email maintainers / use GitHub private advisory; do not file public Issues for vulns.” Full diesel-style policy later.
+
+### Explicitly later (not MVP)
+
+- Code of conduct (add when first external contributors show up, or copy Covenant in 10 minutes then)
+- Discord, Funding.yml, Dependabot, cargo-deny
+- Docker Compose quickstart, release binaries, docs site
+- Rich example gallery, FAQ site, dual MIT/Apache unless you care
+- Schema Registry / multi-DB
+
+### How people send requests (MVP)
+
+```text
+Question / “how do I…?”  →  Discussions
+Bug                       →  Issue (template)
+Feature idea              →  Discussion first; Issue only if you accept it onto the roadmap
+Code                      →  PR from a fork
+Security                  →  Private advisory / email
+```
+
+You triage in GitHub. No second system.
+
+---
+
+## Peer survey (reference)
 
 **Surveyed peers (2026-08-02):**
 
@@ -11,8 +62,6 @@
 | [SeaQL/sea-orm](https://github.com/SeaQL/sea-orm) | ~10k | Polished README/docs site; COMMUNITY + CONTRIBUTING + crates.io |
 
 Also glanced at [Qovery/Replibyte](https://github.com/Qovery/Replibyte) (~4k) as a **CLI/tool** sibling (Docker compose demos, website docs) — useful for delivery packaging, less for crate governance.
-
-**Product status when this plan applies:** Phases 0–5 done; **Phase 6 (other DBs) deferred**. Scope stays MySQL 9.x.
 
 ---
 
@@ -97,11 +146,11 @@ Common root surface (all three libraries share most of this):
 - [ ] Root `.gitignore` / ensure secrets (`ce-stream.toml` passwords) never published
 - [ ] Rewrite README for public audience; link planning as “internals”
 
-### B. Governance + communication (1–2 days)
+### B. Governance + communication (MVP)
 
-- [ ] `CONTRIBUTING.md` + CoC
-- [ ] `SECURITY.md`
-- [ ] `.github/ISSUE_TEMPLATE` + `pull_request_template.md`
+- [ ] Short `CONTRIBUTING.md` (no CoC required yet)
+- [ ] Tiny security note (README paragraph or short `SECURITY.md`)
+- [ ] Bug issue template + PR template
 - [ ] Enable Discussions; document channels in README
 
 ### C. Delivery + CI (2–4 days)
@@ -133,8 +182,4 @@ Common root surface (all three libraries share most of this):
 
 ---
 
-## Success criteria
-
-A new visitor to the GitHub root can: understand what ce-stream is in 30 seconds, install or build it, find license/security/contribute paths, and open a useful bug report — without reading internal phase history. Maintainers can ship a `v0.1.0` crates.io release with CI green on every PR.
-
-**Next after this plan is accepted:** execute workstream A → B → C, then tag v0.1.
+**Success for MVP:** outsider understands the product + AxialDB stewardship in 30s; can build/run; can file a bug or PR; CI is green; license is clear. No Discord, no docs site, no multi-DB.

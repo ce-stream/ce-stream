@@ -11,15 +11,15 @@ use ce_stream_mysql::{MysqlBinlogSource, MysqlSourceOptions};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-    tracing_subscriber::fmt()
-        .with_env_filter("info")
-        .init();
+    tracing_subscriber::fmt().with_env_filter("info").init();
 
     let host = std::env::var("CE_STREAM_HOST").unwrap_or_else(|_| "127.0.0.1".into());
     let user = std::env::var("CE_STREAM_USER").unwrap_or_else(|_| "ce_stream".into());
     let password = std::env::var("CE_STREAM_PASSWORD").unwrap_or_else(|_| "CeStreamSpike9!".into());
     let table = std::env::var("CE_STREAM_TABLE").unwrap_or_else(|_| "ce_stream_spike.t1".into());
-    let (db, tbl) = table.split_once('.').ok_or("CE_STREAM_TABLE must be db.table")?;
+    let (db, tbl) = table
+        .split_once('.')
+        .ok_or("CE_STREAM_TABLE must be db.table")?;
 
     let mut source = MysqlBinlogSource {
         options: MysqlSourceOptions {
@@ -52,12 +52,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         })
         .await
         .map_err(|e| e.to_string())
-        .or_else(|e| {
-            if e.contains("done") {
-                Ok(())
-            } else {
-                Err(e)
-            }
-        })?;
+        .or_else(|e| if e.contains("done") { Ok(()) } else { Err(e) })?;
     Ok(())
 }

@@ -12,7 +12,10 @@ use serde::Deserialize;
 use tracing_subscriber::EnvFilter;
 
 #[derive(Debug, Parser)]
-#[command(name = "ce-stream", about = "CloudEvents change streams from database logs")]
+#[command(
+    name = "ce-stream",
+    about = "CloudEvents change streams from database logs"
+)]
 struct Args {
     /// Path to config TOML
     #[arg(short, long, default_value = "ce-stream.toml")]

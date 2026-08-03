@@ -2,71 +2,64 @@
 
 CloudEvents change streams from database logs.
 
+**Created and maintained by the [AxialDB](https://axialdb.com/) vendor** ([releases](https://github.com/AxialDB/releases)). Open-source under Apache-2.0 — not an AxialDB-only runtime; anyone can run it against MySQL 9.x.
+
+[![CI](https://github.com/ce-stream/ce-stream/actions/workflows/ci.yml/badge.svg)](https://github.com/ce-stream/ce-stream/actions/workflows/ci.yml)
+
 **v1:** MySQL **9.x** ROW binlog → CloudEvents 1.0 (JSON default; optional Avro). Kafka not required.  
-**Deferred:** other DB adapters (Postgres / SQLite / MSSQL) — see [`docs/planning.md`](docs/planning.md).
+**Deferred:** other DB adapters — see [`docs/planning.md`](docs/planning.md).
 
-**Plan:** [`docs/planning.md`](docs/planning.md) · **OSS readiness:** [`docs/oss-readiness.md`](docs/oss-readiness.md)
-
-## Status (2026-08-02)
-
-Phases **0–5 complete**. MySQL 9.x capture → stdout/HTTP sinks; at-least-once + backpressure; signal mode; perf harness; optional Avro. Other engines **deferred**.
+## Quick start
 
 ```powershell
-$env:CARGO_TARGET_DIR = "D:\Work\ITART Repos\ce-stream\target"
+copy ce-stream.toml.example ce-stream.toml
+# edit host / user / password / include_tables / sink
+
+cargo build -p ce-stream-cli --release
 cargo run -p ce-stream-cli --release -- --config ce-stream.toml
 ```
 
-| Doc | Topic |
-|-----|--------|
-| [`docs/delivery.md`](docs/delivery.md) | At-least-once, backpressure, payload modes |
-| [`docs/ops-e2e.md`](docs/ops-e2e.md) | Ops / prod continuous run |
-| [`docs/library.md`](docs/library.md) | Embed as a library |
-| [`docs/avro.md`](docs/avro.md) | Optional Avro encoding |
-| [`docs/perf-harness.md`](docs/perf-harness.md) | Perf scenarios + lab results |
-| [`docs/spike-mysql-binlog.md`](docs/spike-mysql-binlog.md) | MySQL 9.x spike notes |
+Install from git (crates.io publish comes later):
 
-For real column names, set MySQL `binlog_row_metadata=FULL`. Prefer capturing from a **replica**.
-
-## Workspace
-
-```text
-ce-stream/
-  Cargo.toml
-  ce-stream.toml.example
-  schemas/                  # Avro .avsc (consumer copy)
-  crates/
-    ce-stream-core/         # CloudEvent, sinks (stdout|http), Avro, traits
-    ce-stream-mysql/        # MySQL 9.x binlog adapter
-    ce-stream-cli/          # `ce-stream` binary
-    ce-stream-perf-sink/    # mock HTTP sink for perf
-  scripts/perf/             # baseline / choke / sustained runners
-  vendor/mysql-binlog-connector-rust/   # patched SHOW BINARY LOG STATUS
-  docs/
+```powershell
+cargo install --git https://github.com/ce-stream/ce-stream --locked ce-stream-cli
 ```
 
-Pipeline:
+Prefer a **replica**. For real column names: MySQL `binlog_row_metadata=FULL`.
+
+## Docs
+
+| Doc | Topic |
+|-----|--------|
+| [`docs/INDEX.md`](docs/INDEX.md) | Doc map |
+| [`docs/ops-e2e.md`](docs/ops-e2e.md) | Ops / continuous run |
+| [`docs/delivery.md`](docs/delivery.md) | At-least-once, backpressure |
+| [`docs/library.md`](docs/library.md) | Embed as a library |
+| [`docs/avro.md`](docs/avro.md) | Optional Avro |
+| [`docs/perf-harness.md`](docs/perf-harness.md) | Perf harness + lab results |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Bugs, PRs, Discussions |
+| [`SECURITY.md`](SECURITY.md) | Vulnerability reporting |
+| [`CHANGELOG.md`](CHANGELOG.md) | Releases |
+| [`docs/oss-readiness.md`](docs/oss-readiness.md) | Lean OSS MVP plan |
+| [`docs/planning.md`](docs/planning.md) | Internal phase status |
+
+## Pipeline
 
 ```text
-ChangeSource (mysql) → filter include-list → CloudEvent → Sink (stdout|http; json|avro)
+ChangeSource (mysql) → include-list → CloudEvent → Sink (stdout|http; json|avro)
                               ↑
                          Checkpoint (GTID)
 ```
 
-## Build
-
-```powershell
-cargo build -p ce-stream-cli --release
-cargo run -p ce-stream-cli --release -- --config ce-stream.toml
-cargo run -p ce-stream-mysql --example embed_callback
-```
-
-Copy `ce-stream.toml.example` → `ce-stream.toml`. Set `sink.format = "json"` (default) or `"avro"`.
-
 ## Non-goals (v1)
 
-- Debezium / Kafka Connect
+- Debezium / Kafka Connect replacement claims
 - MySQL &lt; 9.x
-- Other DB engines (deferred; Phase 6 parked)
-- Full warehouse ELT
-- In-mysqld plugins as the capture path
-- Schema Registry (optional later)
+- Other DB engines (deferred)
+- Warehouse ELT / in-mysqld plugins
+- Schema Registry (later)
+
+## License
+
+Licensed under the [Apache License, Version 2.0](LICENSE).  
+Copyright notice: [`NOTICE`](NOTICE) (`Copyright 2026 AxialDB`).

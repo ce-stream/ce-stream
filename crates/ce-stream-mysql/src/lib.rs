@@ -43,10 +43,7 @@ impl MysqlSourceOptions {
         } else {
             "ssl-mode=disabled"
         };
-        format!(
-            "mysql://{user}:{pass}@{}:{}/?{ssl}",
-            self.host, self.port
-        )
+        format!("mysql://{user}:{pass}@{}:{}/?{ssl}", self.host, self.port)
     }
 }
 
@@ -128,7 +125,8 @@ impl ChangeSource for MysqlBinlogSource {
             "starting MySQL binlog source"
         );
 
-        let (tx, mut rx) = tokio::sync::mpsc::channel::<std::result::Result<StreamMsg, String>>(capacity);
+        let (tx, mut rx) =
+            tokio::sync::mpsc::channel::<std::result::Result<StreamMsg, String>>(capacity);
         let stop = Arc::new(AtomicBool::new(false));
         let stop_bg = Arc::clone(&stop);
 
@@ -179,6 +177,7 @@ enum StreamMsg {
     Advance { gtid_set: String },
 }
 
+#[allow(clippy::too_many_arguments)]
 async fn binlog_loop(
     url: String,
     server_id: u64,
@@ -301,11 +300,7 @@ fn column_names_from_table_map(
             .columns
             .iter()
             .enumerate()
-            .map(|(i, c)| {
-                c.column_name
-                    .clone()
-                    .unwrap_or_else(|| format!("col_{i}"))
-            })
+            .map(|(i, c)| c.column_name.clone().unwrap_or_else(|| format!("col_{i}")))
             .collect();
         if names.iter().any(|n| !n.starts_with("col_")) {
             return names;
@@ -319,6 +314,7 @@ fn column_names_from_table_map(
         .collect()
 }
 
+#[allow(clippy::too_many_arguments)]
 fn emit_rows<'a, I>(
     tx: &tokio::sync::mpsc::Sender<std::result::Result<StreamMsg, String>>,
     source_id: &str,

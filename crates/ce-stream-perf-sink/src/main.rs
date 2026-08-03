@@ -76,9 +76,7 @@ async fn events(State(state): State<Arc<AppState>>, body: Bytes) -> impl IntoRes
         tokio::time::sleep(state.delay).await;
     }
     state.received.fetch_add(1, Ordering::SeqCst);
-    state
-        .bytes
-        .fetch_add(body.len() as u64, Ordering::SeqCst);
+    state.bytes.fetch_add(body.len() as u64, Ordering::SeqCst);
     StatusCode::OK
 }
 
