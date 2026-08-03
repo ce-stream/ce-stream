@@ -6,3 +6,6 @@ ce-stream.toml
 .vscode/
 *.swp
 scripts/perf/out/
+
+# Do not ship upstream example env (sample credentials)
+vendor/mysql-binlog-connector-rust/example/src/.env

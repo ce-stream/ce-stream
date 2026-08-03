@@ -1,0 +1,17 @@
+mod binary_tests;
+mod bit_tests;
+mod blob_tests;
+mod bytes_test_util;
+mod char_tests;
+mod charset_tests;
+mod date_tests;
+mod date_time_tests;
+mod decimal_tests;
+mod enum_tests;
+mod json_tests;
+mod numeric_tests;
+mod set_tests;
+mod text_tests;
+mod time_tests;
+mod timestamp_tests;
+mod year_tests;
