@@ -7,11 +7,12 @@ param(
     [int]$ListenPort = 18081,
     [ValidateSet("json", "avro")]
     [string]$Format = "json",
-    [string]$MysqlDefaults = "D:\Work\ITART Repos\axialdb\my.cnf"
+    [string]$MysqlDefaults = ""
 )
 
 $ErrorActionPreference = "Stop"
 . (Join-Path $PSScriptRoot "_common.ps1")
+$MysqlDefaults = Resolve-MysqlDefaults -MysqlDefaults $MysqlDefaults
 
 $repo = Get-RepoRoot
 $env:CARGO_TARGET_DIR = Join-Path $repo "target"

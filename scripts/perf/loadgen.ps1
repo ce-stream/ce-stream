@@ -4,12 +4,14 @@
 param(
     [int]$Rows = 1000,
     [int]$BatchSize = 50,
-    [string]$MysqlDefaults = "D:\Work\ITART Repos\axialdb\my.cnf",
+    [string]$MysqlDefaults = "",
     [string]$Table = "ce_stream_spike.t1",
     [string]$Prefix = "perf"
 )
 
 $ErrorActionPreference = "Stop"
+. (Join-Path $PSScriptRoot "_common.ps1")
+$MysqlDefaults = Resolve-MysqlDefaults -MysqlDefaults $MysqlDefaults
 if ($BatchSize -lt 1) { throw "BatchSize must be >= 1" }
 if ($Rows -lt 1) { throw "Rows must be >= 1" }
 

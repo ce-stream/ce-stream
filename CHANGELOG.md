@@ -7,6 +7,12 @@ and this project aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-08-02
+
+### Security
+
+- Removed lab password and machine-local AxialDB paths from examples, scripts, and docs. Use `CHANGE_ME` / `CE_STREAM_PASSWORD` / `MYSQL_DEFAULTS_FILE` (or `-MysqlDefaults`). Rotate any MySQL password that matched the old example value; it remains in `v0.1.0` git history.
+
 ## [0.1.0] - 2026-08-02
 
 ### Added
@@ -27,5 +33,6 @@ and this project aims to follow [Semantic Versioning](https://semver.org/).
 - Other database engines (Phase 6 parked).
 - Schema Registry / typed per-table Avro.
 
-[Unreleased]: https://github.com/ce-stream/ce-stream/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/ce-stream/ce-stream/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/ce-stream/ce-stream/releases/tag/v0.1.1
 [0.1.0]: https://github.com/ce-stream/ce-stream/releases/tag/v0.1.0

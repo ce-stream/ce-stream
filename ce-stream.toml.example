@@ -10,7 +10,7 @@ source_id = "mysql://127.0.0.1:3306/ce-stream"
 host = "127.0.0.1"
 port = 3306
 user = "ce_stream"
-password = "CeStreamSpike9!"
+password = "CHANGE_ME"
 server_id = 19001
 tls = true
 # full = before/after images; signal = op only

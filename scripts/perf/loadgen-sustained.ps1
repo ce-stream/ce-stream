@@ -5,12 +5,14 @@ param(
     [int]$OpsPerSec = 300,
     [int]$DurationSec = 60,
     [int]$BatchSize = 50,
-    [string]$MysqlDefaults = "D:\Work\ITART Repos\axialdb\my.cnf",
+    [string]$MysqlDefaults = "",
     [string]$Table = "ce_stream_spike.t1",
     [string]$Prefix = "sust"
 )
 
 $ErrorActionPreference = "Stop"
+. (Join-Path $PSScriptRoot "_common.ps1")
+$MysqlDefaults = Resolve-MysqlDefaults -MysqlDefaults $MysqlDefaults
 if ($OpsPerSec -lt 1) { throw "OpsPerSec must be >= 1" }
 if ($DurationSec -lt 1) { throw "DurationSec must be >= 1" }
 if ($BatchSize -lt 1) { throw "BatchSize must be >= 1" }

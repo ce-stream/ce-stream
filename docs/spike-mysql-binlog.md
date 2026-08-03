@@ -8,9 +8,9 @@
 
 | Item | Value |
 |------|--------|
-| Server | AxialDB MySQL97 / `127.0.0.1:3306` / **9.7.0** |
+| Server | Local MySQL **9.7.0** on `127.0.0.1:3306` |
 | Binlog | `log_bin=ON`, `ROW`, `FULL`, `gtid_mode=ON` |
-| User | `ce_stream`@`%` (`scripts/spike-setup.sql`) |
+| User | `ce_stream`@`%` (`scripts/spike-setup.sql`; set your own password) |
 | Crate | `mysql-binlog-connector-rust` **git** `master` @ `f7cca8ec` (**0.3.4**), feature `rustls` |
 | Why git | crates.io **0.3.3** has **no TLS features** (README ahead of publish) |
 
@@ -32,50 +32,34 @@
 - Delete: before image for deleted row
 - Binary: `cargo run -p ce-stream-spike` with `CE_STREAM_DB_URL=...?ssl-mode=required`
 
-## Blocker detail: `SHOW MASTER STATUS`
+## Upstream gap: `SHOW MASTER STATUS`
 
-On connect with empty filename / empty GTID, the crate calls:
-
-```sql
-show master status
-```
-
-MySQL 9.7:
-
-```text
-ERROR 1064 ... near 'MASTER STATUS'
-```
+MySQL 8.4+ / 9.x removed `SHOW MASTER STATUS` in favor of `SHOW BINARY LOG STATUS` / `SHOW REPLICA STATUS`. The connector's empty-`Latest` path still issues the old statement → server error → spike cannot auto-discover current file/pos without a GTID set.
 
 Replacement (same column layout on lab):
 
 ```sql
-SHOW BINARY LOG STATUS
+SHOW BINARY LOG STATUS;
+-- File | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set
 ```
-
-`@master_binlog_checksum` / `@master_heartbeat_period` still accepted on 9.7 (session vars for replica protocol).
-
-**Workaround used in spike:** always pass an explicit GTID set so `fetch_binlog_info` is skipped (`scripts/run-spike.ps1`).
-
-## Decision / follow-up
 
 **Applied:** vendored crate at `vendor/mysql-binlog-connector-rust` with one-line rename only (no older-MySQL fallback). `Latest` re-verified PASS.
 
-Optional: contribute the same one-liner upstream (apecloud).
+**Workaround used in spike:** always pass an explicit GTID set so `fetch_binlog_info` is skipped (`scripts/run-spike.ps1`).
 
 ## Non-issues for this spike
 
 - `require_secure_transport=OFF` on lab: TLS still negotiated when client requests `ssl-mode=required`
-- crates.io TLS docs vs publish lag: pin git until 0.3.4+ with features is on crates.io
 
-## How to re-run
+## Re-run
 
 ```powershell
-# Apply scripts/spike-setup.sql once if needed, then:
+# Apply scripts/spike-setup.sql once (edit password), then:
+$env:CE_STREAM_PASSWORD = "your-password"
 .\scripts\run-spike.ps1
-# In another shell:
-mysql --defaults-extra-file="D:\Work\ITART Repos\axialdb\my.cnf" -e "INSERT INTO ce_stream_spike.t1(name) VALUES ('x'),('y'),('z');"
-```
 
-## Phase 2 implication
+# In another shell, generate DML while the spike waits, e.g.:
+mysql --defaults-extra-file=PATH\to\my.cnf -e "INSERT INTO ce_stream_spike.t1(name) VALUES ('x'),('y'),('z');"
+```
 
 Proceed with `mysql-binlog-connector-rust` (git + rustls) behind `ce-stream-mysql`, after the SQL rename patch (or equivalent). Map `WriteRows` / `UpdateRows` / `DeleteRows` + GTID to CloudEvents; do not rely on crate `Latest` until patched.

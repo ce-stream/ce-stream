@@ -5,7 +5,7 @@
   "lab": {
     "mysql_version": "9.x",
     "host_role": "primary",
-    "machine_notes": "AxialDB MySQL 9.7 lab, local HTTP mock sink, sync checkpoint after each ACK",
+    "machine_notes": "local MySQL 9.x lab, local HTTP mock sink, sync checkpoint after each ACK",
     "recorded": "2026-08-02"
   },
   "ce_stream_json": {

@@ -98,7 +98,7 @@ Worksheet: [`scripts/perf/comparison-worksheet.json`](../scripts/perf/comparison
 ## How to run
 
 ```powershell
-cd D:\Work\ITART Repos\ce-stream
+cd path\to\ce-stream
 .\scripts\perf\run-baseline.ps1 -Rows 1000
 .\scripts\perf\run-choke.ps1 -Rows 500 -DelayMs 10
 .\scripts\perf\run-sustained.ps1 -OpsPerSec 300 -DurationSec 60
@@ -108,5 +108,7 @@ cd D:\Work\ITART Repos\ce-stream
 .\scripts\perf\run-choke.ps1 -Rows 500 -DelayMs 10 -Format avro
 .\scripts\perf\run-sustained.ps1 -OpsPerSec 300 -DurationSec 60 -Format avro
 ```
+
+Pass `-MysqlDefaults` (path to a mysql client defaults file) or set `MYSQL_DEFAULTS_FILE`. Set `CE_STREAM_PASSWORD` for the capture user (see `ce-stream.toml.example`).
 
 Artifacts under `scripts/perf/out/` (gitignored). Summaries include `format` (`json`|`avro`).

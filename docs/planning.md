@@ -7,7 +7,7 @@
 **Constraints (locked for v1):**
 
 - Language: **Rust** (if crate spike fails on MySQL 9.x → **stop and discuss**; no silent Go/Java pivot)
-- MySQL: **9.x only** (local AxialDB MySQL97 / 3306)
+- MySQL: **9.x only** (local lab / eval instance on port 3306)
 - Capture: **ROW binlog** via sidecar client (prefer replica); not in-mysqld plugins for v1
 - Capture concurrency: **single ordered reader** per source (one dump stream / GTID order). Do not parallelize binlog read. Optional sink worker pool + backpressure = Phase 4.
 - Delivery: **library + CLI** (CLI is a thin host; embed in client process is supported). Ops default = sidecar/CLI. One `server_id` per dump client.
@@ -33,7 +33,7 @@
 
 ## Phase 1 — Binlog spike (gate for Rust)
 
-Spike against **local MySQL 9.x** (e.g. AxialDB eval / lab instance):
+Spike against **local MySQL 9.x** (lab or eval instance):
 
 | Check | Pass criteria |
 |-------|----------------|

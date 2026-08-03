@@ -13,6 +13,25 @@ function Ensure-PerfOut {
     return $outDir
 }
 
+function Resolve-MysqlDefaults {
+    param([string]$MysqlDefaults)
+    if (-not [string]::IsNullOrWhiteSpace($MysqlDefaults)) {
+        return $MysqlDefaults
+    }
+    if (-not [string]::IsNullOrWhiteSpace($env:MYSQL_DEFAULTS_FILE)) {
+        return $env:MYSQL_DEFAULTS_FILE
+    }
+    throw "Pass -MysqlDefaults or set MYSQL_DEFAULTS_FILE to a mysql --defaults-extra-file path."
+}
+
+function Get-PerfCapturePassword {
+    $pw = $env:CE_STREAM_PASSWORD
+    if ([string]::IsNullOrWhiteSpace($pw)) {
+        throw "Set CE_STREAM_PASSWORD to the ce_stream MySQL user password before running perf scripts."
+    }
+    return $pw
+}
+
 function Write-PerfToml {
     param(
         [string]$Path,
@@ -23,6 +42,7 @@ function Write-PerfToml {
         [ValidateSet("json", "avro")]
         [string]$Format = "json"
     )
+    $password = Get-PerfCapturePassword
     $content = @"
 [source]
 adapter = "mysql"
@@ -30,7 +50,7 @@ source_id = "mysql://127.0.0.1:3306/ce-stream-perf"
 host = "127.0.0.1"
 port = 3306
 user = "ce_stream"
-password = "CeStreamSpike9!"
+password = "$password"
 server_id = $ServerId
 tls = true
 payload_mode = "$PayloadMode"

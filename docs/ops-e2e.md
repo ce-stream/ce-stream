@@ -23,7 +23,7 @@ Replication user: `REPLICATION SLAVE`, `REPLICATION CLIENT`, typically `SELECT` 
 Do **not** pass `--max-events` (that flag is smoke/CI only).
 
 ```powershell
-$env:CARGO_TARGET_DIR = "D:\Work\ITART Repos\ce-stream\target"
+$env:CARGO_TARGET_DIR = Join-Path (Get-Location) "target"
 $env:RUST_LOG = "info"
 cargo run -p ce-stream-cli --release -- --config ce-stream.toml
 ```

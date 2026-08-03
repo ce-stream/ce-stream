@@ -110,7 +110,7 @@ Common root surface (all three libraries share most of this):
 **Must-have for “same level” at v0.1 announce:**
 
 1. **License files on disk** matching Cargo (`LICENSE` or dual MIT/Apache like peers).
-2. **README rewrite for outsiders** — problem → install → 30-second run → doc map; badges when CI/crates exist; remove internal AxialDB paths as the primary story.
+2. **README rewrite for outsiders** — problem → install → 30-second run → doc map; badges when CI/crates exist; no machine-local lab paths in public docs/scripts.
 3. **`CHANGELOG.md`** starting at `0.1.0` (Keep a Changelog style).
 4. **`CONTRIBUTING.md`** — how to build, lab MySQL 9.x expectations, PR norms, where to ask questions.
 5. **`.github/workflows`** — at least `cargo check` + `cargo test` (unit); optional clippy/fmt.

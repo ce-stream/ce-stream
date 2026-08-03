@@ -22,7 +22,7 @@ cargo run -p ce-stream-cli --release -- --config ce-stream.toml
 Install from git (crates.io publish comes later):
 
 ```powershell
-cargo install --git https://github.com/ce-stream/ce-stream --locked ce-stream-cli
+cargo install --git https://github.com/ce-stream/ce-stream --locked --tag v0.1.1 ce-stream-cli
 ```
 
 Prefer a **replica**. For real column names: MySQL `binlog_row_metadata=FULL`.

@@ -3,14 +3,20 @@
 # ASCII-only (Windows PowerShell 5.1).
 
 param(
-    [string]$Config = "D:\Work\ITART Repos\ce-stream\ce-stream.toml",
-    [string]$MysqlDefaults = "D:\Work\ITART Repos\axialdb\my.cnf",
+    [string]$Config = "ce-stream.toml",
+    [string]$MysqlDefaults = "",
     [string]$InsertSql = "INSERT INTO ce_stream_spike.t1(name) VALUES ('e2e-http');",
     [int]$Port = 18080
 )
 
 $ErrorActionPreference = "Stop"
-$env:CARGO_TARGET_DIR = "D:\Work\ITART Repos\ce-stream\target"
+$repo = Split-Path -Parent $PSScriptRoot
+. (Join-Path $repo "scripts\perf\_common.ps1")
+$MysqlDefaults = Resolve-MysqlDefaults -MysqlDefaults $MysqlDefaults
+if (-not [System.IO.Path]::IsPathRooted($Config)) {
+    $Config = Join-Path $repo $Config
+}
+$env:CARGO_TARGET_DIR = Join-Path $repo "target"
 $env:RUST_LOG = "info"
 
 $received = Join-Path $env:TEMP "ce-stream-e2e-http.json"

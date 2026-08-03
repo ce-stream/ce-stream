@@ -15,7 +15,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
 
     let host = std::env::var("CE_STREAM_HOST").unwrap_or_else(|_| "127.0.0.1".into());
     let user = std::env::var("CE_STREAM_USER").unwrap_or_else(|_| "ce_stream".into());
-    let password = std::env::var("CE_STREAM_PASSWORD").unwrap_or_else(|_| "CeStreamSpike9!".into());
+    let password = std::env::var("CE_STREAM_PASSWORD").map_err(|_| {
+        "set CE_STREAM_PASSWORD (MySQL user password for the capture account)"
+    })?;
     let table = std::env::var("CE_STREAM_TABLE").unwrap_or_else(|_| "ce_stream_spike.t1".into());
     let (db, tbl) = table
         .split_once('.')
