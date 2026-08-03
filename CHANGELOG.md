@@ -7,11 +7,6 @@ and this project aims to follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-### Added
-
-- Lean OSS MVP: `LICENSE`, `NOTICE` (`Copyright 2026 AxialDB`), `CONTRIBUTING.md`, `SECURITY.md`, GitHub issue/PR templates, CI workflow.
-- README credit: created and maintained by the AxialDB vendor ([axialdb.com](https://axialdb.com/), [AxialDB/releases](https://github.com/AxialDB/releases)).
-
 ## [0.1.0] - 2026-08-02
 
 ### Added
@@ -23,6 +18,9 @@ and this project aims to follow [Semantic Versioning](https://semver.org/).
 - `payload_mode`: `full` | `signal`.
 - CLI (`ce-stream`), embed example, systemd unit, E2E and perf harness scripts.
 - Lab perf baselines (JSON and Avro) documented in `docs/perf-harness.md`.
+- Lean OSS MVP: `LICENSE`, `NOTICE` (`Copyright 2026 AxialDB`), `CONTRIBUTING.md`, `SECURITY.md`, CI, issue/PR templates.
+- Discussion category forms (`q-a`, `ideas`, `general`) and Issues contact links to Discussions.
+- README credit: created and maintained by the AxialDB vendor ([axialdb.com](https://axialdb.com/), [AxialDB/releases](https://github.com/AxialDB/releases)).
 
 ### Deferred
 

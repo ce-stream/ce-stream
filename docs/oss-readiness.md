@@ -4,7 +4,7 @@
 
 **Maintainer:** [AxialDB](https://axialdb.com/) vendor ([releases](https://github.com/AxialDB/releases)). Project is open-source; AxialDB is the creating/maintaining org, not a hard runtime dependency.
 
-**MVP status (2026-08-02):** Implemented in-repo — `LICENSE`, README credit, `CONTRIBUTING.md`, `SECURITY.md`, issue/PR templates, CI workflow, `CHANGELOG.md`, install-from-git docs. **Manual:** enable GitHub Discussions on the repo; tag `v0.1.0` when you cut the release; crates.io publish later.
+**MVP status (2026-08-02):** Implemented in-repo — `LICENSE`, `NOTICE`, README credit, `CONTRIBUTING.md`, `SECURITY.md`, issue/PR templates, CI workflow, `CHANGELOG.md`, install-from-git docs, Discussion forms under `.github/DISCUSSION_TEMPLATE/` (`q-a`, `ideas`, `general`). **Manual:** confirm Discussion category slugs match those filenames; tag `v0.1.0` when you cut the release; crates.io publish later.
 
 ---
 
@@ -19,7 +19,7 @@ Do **not** start with Discord, CoC bureaucracy, Dependabot sprawl, docs websites
 | `LICENSE` (Apache-2.0 file matching Cargo) | Legal clarity; peers always have this | done |
 | README (outsider + **AxialDB** links) | First impression | done |
 | Short `CONTRIBUTING.md` | Fork → PR; bugs = Issues; questions = Discussions | done |
-| Enable GitHub **Discussions** | No Discord yet | **manual** (repo settings) |
+| Enable GitHub **Discussions** + category forms | No Discord yet | Discussions on; forms in `.github/DISCUSSION_TEMPLATE/` (push if not on remote yet) |
 | One bug **issue template** + short **PR template** | Useful reports without process theater | done |
 | CI: `fmt` + `clippy` + `test` (no live MySQL on every PR) | Trust signal | done (`.github/workflows/ci.yml`) |
 | `CHANGELOG.md` + tag `v0.1.0` | Release hygiene | changelog done; **tag when ready** |

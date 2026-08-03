@@ -1,0 +1,15 @@
+title: "[General] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        General discussion that is not a how-to question or a feature idea.
+
+        Prefer **Q&A** for usage questions and **Ideas** for feature requests.
+  - type: textarea
+    id: topic
+    attributes:
+      label: Topic
+      description: What would you like to discuss?
+    validations:
+      required: true

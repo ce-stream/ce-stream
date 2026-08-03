@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Questions and feature ideas
-    url: https://github.com/ce-stream/ce-stream/discussions
-    about: Use Discussions for how-to questions and feature ideas (not bug reports).
+  - name: Ask a question (Discussions Q&A)
+    url: https://github.com/ce-stream/ce-stream/discussions/new?category=q-a
+    about: How-to and usage questions (not bugs).
+  - name: Feature idea (Discussions Ideas)
+    url: https://github.com/ce-stream/ce-stream/discussions/new?category=ideas
+    about: Propose features; bugs still use Issues.
