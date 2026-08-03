@@ -51,14 +51,6 @@ ChangeSource (mysql) → include-list → CloudEvent → Sink (stdout|http; json
                          Checkpoint (GTID)
 ```
 
-## Non-goals (v1)
-
-- Debezium / Kafka Connect replacement claims
-- MySQL &lt; 9.x
-- Other DB engines (deferred)
-- Warehouse ELT / in-mysqld plugins
-- Schema Registry (later)
-
 ## License
 
 Licensed under the [Apache License, Version 2.0](LICENSE).  
